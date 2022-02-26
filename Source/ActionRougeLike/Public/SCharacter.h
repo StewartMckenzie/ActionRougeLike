@@ -14,6 +14,11 @@ class ACTIONROUGELIKE_API ASCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
+protected:
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AActor> ProjectileClass;
+
+
 public:
 
 
@@ -37,6 +42,6 @@ protected:
 
 	void MoveForward(float Value);
 	void MoveRight(float Value);
-
+	void PrimaryAttack();
 
 };
