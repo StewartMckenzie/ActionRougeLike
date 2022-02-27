@@ -6,6 +6,9 @@
 #include "GameFramework/Actor.h"
 #include "SExplosiveBarrel.generated.h"
 
+class UStaticMeshComponent;
+class URadialForceComponent;
+
 
 
 
@@ -18,12 +21,26 @@ public:
 	// Sets default values for this actor's properties
 	ASExplosiveBarrel();
 
+
+
+public:
+	UPROPERTY(EditAnywhere, Category = "Forces")
+		float Radius = 750.0f;
+	UPROPERTY(EditAnywhere, Category = "Forces")
+		float Strength = 2500.0f;
+
 protected:
 	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* MeshComp;
+
+	UPROPERTY(VisibleAnywhere)
+	URadialForceComponent* RadialForceComp;
+	
+	virtual void PostInitializeComponents() override;
+
+	UFUNCTION()
+	void OnActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor,UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
 };
