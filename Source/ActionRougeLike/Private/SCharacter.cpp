@@ -5,7 +5,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
-
+#include "SInteractionComponent.h"
 // Sets default values
 ASCharacter::ASCharacter()
 {
@@ -18,6 +18,9 @@ ASCharacter::ASCharacter()
 
 	CameraComp = CreateDefaultSubobject<UCameraComponent>("CameraComp");
 	CameraComp->SetupAttachment(SpringArmComp);
+
+	InteractionComp = CreateDefaultSubobject<USInteractionComponent>("InteractionComp");
+
 
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	bUseControllerRotationYaw = false;
@@ -67,6 +70,7 @@ void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 	PlayerInputComponent->BindAction("PrimaryAttack", IE_Pressed, this, &ASCharacter::PrimaryAttack);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
+	PlayerInputComponent->BindAction("PrimaryInteract", IE_Pressed, this, &ASCharacter::PrimaryInteract);
 }
 
 void ASCharacter::MoveForward(float Value)
@@ -102,5 +106,15 @@ void ASCharacter::PrimaryAttack()
 
 
 	GetWorld()->SpawnActor<AActor>(ProjectileClass, SpawnTM, SpawnParams);
+}
+
+void ASCharacter::PrimaryInteract()
+{
+
+	if (InteractionComp) {
+		InteractionComp->PrimaryInteract();
+
+	}
+
 }
 
