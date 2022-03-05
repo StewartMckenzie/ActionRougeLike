@@ -4,6 +4,7 @@
 #include "SExplosiveBarrel.h"
 #include <PhysicsEngine/RadialForceComponent.h>
 #include "Components/StaticMeshComponent.h"
+#include "DrawDebugHelpers.h"
 
 // Sets default values
 ASExplosiveBarrel::ASExplosiveBarrel()
@@ -40,5 +41,11 @@ void ASExplosiveBarrel::PostInitializeComponents()
 void ASExplosiveBarrel::OnActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
 	RadialForceComp->FireImpulse();
+
+	UE_LOG(LogTemp, Log, TEXT("OnActorHit in Explosive Barrel"));
+	UE_LOG(LogTemp, Log, TEXT("Other actor: %s, at game time: %f"),*GetNameSafe(OtherActor),GetWorld()->TimeSeconds);
+	FString CombinedString = FString::Printf(TEXT("Hit at location: %s"), *Hit.ImpactPoint.ToString());
+	DrawDebugString(GetWorld(), Hit.ImpactPoint, CombinedString, nullptr, FColor::Green, 2.0f, true);
+
 }
 
