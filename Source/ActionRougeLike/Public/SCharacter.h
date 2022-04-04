@@ -79,4 +79,9 @@ protected:
 	void Dash();
 	void Dash_TimeElapsed();
 
+
+	UFUNCTION()
+		void OnHealthChanged(AActor* InstigatorActor, USAttributeComponent* OwningComp, float NewHEalth, float Delta);
+
+	virtual void PostInitializeComponents() override;
 };
